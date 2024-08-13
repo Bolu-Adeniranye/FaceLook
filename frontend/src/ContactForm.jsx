@@ -1,10 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import "./ContactForm.css"; // Adjust the path if needed
 
-const ContactForm = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+const ContactForm = ({ existingContact = {}, updateCallback }) => {
+  const [firstName, setFirstName] = useState(existingContact.firstName || "");
+  const [lastName, setLastName] = useState(existingContact.lastName || "");
+  const [email, setEmail] = useState(existingContact.email || "");
+
+  const updating = Object.entries(existingContact).length !== 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,9 +18,12 @@ const ContactForm = () => {
       email,
     };
 
-    const url = "http://127.0.0.1:5000/create_contact";
+    const url = updating
+      ? `http://127.0.0.1:5000/update_contact/${existingContact.id}`
+      : "http://127.0.0.1:5000/create_contact";
+
     const options = {
-      method: "POST",
+      method: updating ? "PATCH" : "POST",
       headers: {
         "Content-type": "application/json",
       },
@@ -29,6 +35,8 @@ const ContactForm = () => {
     if (response.status !== 201 && response.status !== 200) {
       const data = await response.json();
       alert(data.message);
+    } else {
+      updateCallback();
     }
   };
 
@@ -58,13 +66,15 @@ const ContactForm = () => {
       <div>
         <label htmlFor="email">Email: </label>
         <input
-          type="text"
+          type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <button type="submit">Create Contact</button>
+      <button type="submit">
+        {updating ? "Update Contact" : "Create Contact"}
+      </button>
     </form>
   );
 };

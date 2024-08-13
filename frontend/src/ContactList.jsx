@@ -1,7 +1,26 @@
 /* eslint-disable react/prop-types */
 import "./ContactList.css";
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, updateContact, updateCallback }) => {
+  const onDelete = async (id) => {
+    try {
+      const options = {
+        method: "DELETE",
+      };
+      const response = await fetch(
+        `http://127.0.0.1:5000/delete_contact/${id}`,
+        options
+      );
+      if (response.status === 200 || response.status === 201) {
+        updateCallback();
+      } else {
+        console.error("Failed to Delete");
+      }
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
     <div className="contact-list">
       <h2>Contacts</h2>
@@ -21,8 +40,18 @@ const ContactList = ({ contacts }) => {
               <td>{contact.lastName}</td>
               <td>{contact.email}</td>
               <td>
-                <button className="update-btn">Update</button>
-                <button className="delete-btn">Delete</button>
+                <button
+                  className="update-btn"
+                  onClick={() => updateContact(contact)}
+                >
+                  Update
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => onDelete(contact.id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

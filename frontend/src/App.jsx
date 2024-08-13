@@ -6,6 +6,7 @@ import ContactForm from "./ContactForm";
 const App = () => {
   const [contacts, setContacts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentContact, setCurrentContact] = useState([]);
 
   useEffect(() => {
     fetchContacts();
@@ -22,6 +23,7 @@ const App = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setCurrentContact({});
   };
 
   const openCreateModal = () => {
@@ -29,9 +31,25 @@ const App = () => {
       setIsModalOpen(true);
     }
   };
+
+  const openEditModal = (contact) => {
+    if (isModalOpen) return;
+    setCurrentContact(contact);
+    setIsModalOpen(true);
+  };
+
+  const onUpdate = () => {
+    closeModal();
+    fetchContacts();
+  };
+
   return (
     <div className="body">
-      <ContactList contacts={contacts} />
+      <ContactList
+        contacts={contacts}
+        updateContact={openEditModal}
+        updateCallback={onUpdate}
+      />
       <button onClick={openCreateModal} className="button">
         Create New Contact
       </button>
@@ -41,7 +59,10 @@ const App = () => {
             <span className="close" onClick={closeModal}>
               &times;
             </span>
-            <ContactForm />
+            <ContactForm
+              existingContact={currentContact}
+              updateCallback={onUpdate}
+            />
           </div>
         </div>
       )}
