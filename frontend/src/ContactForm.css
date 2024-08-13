@@ -1,0 +1,49 @@
+/* ContactForm.css */
+
+.contact-form {
+  color: white;
+
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #1d1d1d;
+  font-family: Arial, sans-serif;
+}
+
+.contact-form h2 {
+  margin-top: 0;
+}
+
+.contact-form div {
+  margin-bottom: 15px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.contact-form input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+.contact-form button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #45a049;
+}

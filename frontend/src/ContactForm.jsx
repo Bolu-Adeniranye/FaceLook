@@ -1,7 +1,7 @@
-/* eslint-disable no-empty-pattern */
 import { useState } from "react";
+import "./ContactForm.css"; // Adjust the path if needed
 
-const ContactForm = ({ }) => {
+const ContactForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,11 +29,12 @@ const ContactForm = ({ }) => {
     if (response.status !== 201 && response.status !== 200) {
       const data = await response.json();
       alert(data.message);
-    } 
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="contact-form" onSubmit={handleSubmit}>
+      <h2>Create Contact</h2>
       <div>
         <label htmlFor="firstName">First Name: </label>
         <input
