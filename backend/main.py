@@ -34,7 +34,7 @@ def get_contacts():
     return jsonify({"contacts": json_contacts}), 200
 
 
-@app.route("create_contact", methods=["POST"])
+@app.route("/create_contact", methods=["POST"])
 def create_contact():
     first_name = request.json.get("firstName")
     last_name = request.json.get("lastName")
@@ -48,7 +48,7 @@ def create_contact():
     
     new_contact = Contact(first_name=first_name, last_name=last_name, email=email)
     try:
-        # Add to database seession > Stage change to Database 
+        # Add to database session > Stage change to Database 
         db.session.add(new_contact)
 
         # Actually commit the database session with new_contact object 
