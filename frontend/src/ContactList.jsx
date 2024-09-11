@@ -23,7 +23,7 @@ const ContactList = ({ contacts, updateContact, updateCallback }) => {
 
   return (
     <div className="contact-list">
-      <h2>Contacts</h2>
+      <h2>FaceLook Contacts</h2>
       <table>
         <thead>
           <tr>
